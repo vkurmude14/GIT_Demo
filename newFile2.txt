@@ -1,0 +1,4 @@
+This line is added to test difftool for newFile2
+
+
+This 2nd line is added to test difftool for newFile2
