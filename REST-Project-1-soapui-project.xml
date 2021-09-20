@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="20e9e7fc-9a7a-4cde-b088-ae3ff9d4bb9f" activeEnvironment="Default" name="Get" resourceRoot="" soapui-version="5.6.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="a5a2e3f4-af27-420c-a7f3-84abbcd578e8" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://petstore.swagger.io" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://petstore.swagger.io</con:endpoint></con:endpoints><con:resource name="12" path="/v2/pet/{id}" id="7e3575e4-bee7-4b88-bd1d-e79756e70b30"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value/><con:style>TEMPLATE</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="12 1" id="f07401c9-30e2-4dee-b516-99784aca5095" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="https://petstore.swagger.io/v2/pet/12">ns:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/><con:element xmlns:ns="https://petstore.swagger.io/v2/pet/12">ns:Fault</con:element></con:representation><con:request name="Request 1" id="2d8cc32a-7657-4214-829b-18af4069402f" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://petstore.swagger.io</con:endpoint><con:request/><con:originalUri>https://petstore.swagger.io/v2/pet/12</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="99" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:testSuite id="a84d9ccd-2277-4119-9127-00f296d2c3e4" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e2fcb1e5-dbf1-4f0f-8307-f0466eaf19f9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Get" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="REST Request" id="4311d5aa-b4f9-4132-ba63-84f509fb84bc"><con:settings/><con:config service="https://petstore.swagger.io" resourcePath="/v2/pet/{id}" methodName="12 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="REST Request" id="2d8cc32a-7657-4214-829b-18af4069402f" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://petstore.swagger.io</con:endpoint><con:request/><con:originalUri>https://petstore.swagger.io/v2/pet/12</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="${#TestCase#id}" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="70055445-0ce8-41c7-af13-aff1d0bf712e"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+//If u want to get the id at TestCase level then dont use .testSuite
+// Set a test suite property
+//testRunner.testCase.testSuite.setPropertyValue("id","100")
+// Get a test suite property
+def id=testRunner.testCase.testSuite.getPropertyValue("id") 
+//printing id
+log.info(id)
+//Getting the Test Case response. The testcase name should match with the 
+//created test case.
+//It verifies that which TestCase we want to run.
+def tCase = testRunner.testCase.testSuite.testCases["Get"]
+//The REST Request name should match with the created REST Request for get.
+//It verifies that which REST Request we want to run.
+def getIdTestStep = tCase.testSteps["REST Request"]
+//Running the REST request
+getIdTestStep.run(testRunner,context)
+//Getting the json response
+def responseJson = getIdTestStep.testRequest.response.responseContent
+//Printing json response
+log.info(responseJson)
+//Creating object of JsonSlurper class
+def jsonSlurper = new JsonSlurper()
+//Converting json response to the string format and storing it in object
+def object = jsonSlurper.parseText(responseJson)
+//printing the string response
+log.info(object)
+</script></con:config></con:testStep><con:properties><con:property><con:name>id</con:name><con:value>876</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>id</con:name><con:value>100</con:value></con:property></con:properties></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
